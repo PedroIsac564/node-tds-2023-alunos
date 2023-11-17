@@ -4,7 +4,7 @@ import {
     getRoupaById,
     createRoupa,
     updateRoupa,
-    deleteRoupa,
+    removeRoupa,
 } from "../controllers/roupas.controller.js"
 
 const roupasRouter = Router();
@@ -17,6 +17,6 @@ roupasRouter.post("/", createRoupa);
 
 roupasRouter.put("/:id", updateRoupa);
 
-roupasRouter.delete("/:id", deleteRoupa);
+roupasRouter.delete("/:id", removeRoupa);
 
 export default roupasRouter;

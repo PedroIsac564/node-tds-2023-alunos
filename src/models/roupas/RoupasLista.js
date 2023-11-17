@@ -24,10 +24,27 @@ export class RoupaLista {
         });
     }
     removeRoupa(id) {
-        this.roupas = this.roupas.
-            filter(roupa => roupa.id !== id);
+        this.roupas = this.roupas.filter((roupa) => roupa.id !== id);
     }
-    getLengthRoupa(){
+
+    getLengthRoupa() {
         return this.roupas.length;
     }
+
+    getRoupaByType(tipo) {
+        return this.roupas.filter((roupa) => roupa.tipo === tipo)
+    }
+
+    getRoupaByColor(cor) {
+        return this.roupas.filter((roupa) => roupa.cor === cor)
+    }
+
+    getRoupaBySize(tamanho) {
+        return this.roupas.filter((roupa) => roupa.tamanho === tamanho)
+    }
+
+    getRoupaBySizeType(tamanho, tipo) {
+        return this.roupas.filter((roupa) => roupa.tamanho === tamanho && roupa.tipo === tipo)
+    }
+
 }

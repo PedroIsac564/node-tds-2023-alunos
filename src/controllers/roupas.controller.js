@@ -4,6 +4,48 @@ import { RoupaLista } from "../models/roupas/RoupasLista.js";
 const list = new RoupaLista();
 
 export const getRoupas = (req, res) => {
+
+    const { tipo } = req.query;
+    if (tipo) {
+        const roupas = list.getRoupaByType(tipo);
+        if (!roupas) {
+            return res.status(200).send({ message: "Não ha roupas cadastradas" });
+        } else {
+            return res.status(200).send({ total: `${roupas.length}`, roupas });
+        }
+    }
+
+    const { cor } = req.query;
+    if (cor) {
+        const roupas = list.getRoupaByColor(cor);
+        if (!roupas) {
+            return res.status(200).send({ message: "Não ha roupas cadastradas" });
+        } else {
+            return res.status(200).send({ total: `${roupas.length}`, roupas });
+        }
+    }
+
+    const { tamanho } = req.query;
+    if (tamanho) {
+        const roupas = list.getRoupaBySize(tamanho);
+        if (!roupas) {
+            return res.status(200).send({ message: "Não ha roupas cadastradas" });
+        } else {
+            return res.status(200).send({ total: `${roupas.length}`, roupas });
+        }
+    }
+
+    const { tamanho: tamanhoTipo, tipo: tipoTipo } = req.query;
+    if (tamanhoTipo && tipoTipo) {
+        const roupas = list.getRoupaBySizeType(tamanhoTipo, tipoTipo);
+        if (!roupas) {
+            return res.status(200).send({ message: "Não ha roupas cadastradas" });
+        } else {
+            return res.status(200).send({ total: `${roupas.length}`, roupas });
+        }
+    }
+
+
     const roupas = list.getAllRoupas();
     if (roupas !== 0) {
         return res.status(200).send({ roupas });
@@ -22,7 +64,6 @@ export const getRoupaById = (req, res) => {
         });
     }
     return res.status(200).send(roupa);
-
 };
 
 export const createRoupa = (req, res) => {
@@ -104,22 +145,19 @@ export const updateRoupa = (req, res) => {
     if (!nome || !tipo || !tamanho || !cor || !quantidade || !imagemUrl)
         return res.status(400).send({ message: `Parâmetros inválidos` });
 
-    const roupa = list.getRoupa(id);
-
+        const roupa = list.getRoupa(id);
     if (!roupa) {
         return res.status(404).send({
             message: "Roupa não encontrada",
         })
     }
-
     const updateRoupa = list.updateRoupa(id, nome, tipo, tamanho, cor, quantidade, imagemUrl)
-
     return res.status(200).send({
-        message: "Roupa atualizada com sucesso", roupa,
+        message: "Roupa atualizada com sucesso", updateRoupa
     })
 }
 
-export const deleteRoupa = (req, res) => {
+export const removeRoupa = (req, res) => {
     const { id } = req.params;
 
     const roupa = list.getRoupaById(id);
@@ -129,10 +167,10 @@ export const deleteRoupa = (req, res) => {
             message: "Roupa não encontrado"
         })
     }
-
+    roupa.removeRoupa(id);
     list.removeRoupa(id);
     return res.status(200).send({
-        message: `Roupa removido com sucesso`, roupa,
+        message: "Roupa removida com sucesso",
     })
 }
 
