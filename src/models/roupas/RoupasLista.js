@@ -27,5 +27,7 @@ export class RoupaLista {
         this.roupas = this.roupas.
             filter(roupa => roupa.id !== id);
     }
-
+    getLengthRoupa(){
+        return this.roupas.length;
+    }
 }

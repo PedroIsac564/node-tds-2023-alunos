@@ -1,4 +1,3 @@
-import { Router } from "express";
 import { Roupa } from "../models/roupas/Roupa.js";
 import { RoupaLista } from "../models/roupas/RoupasLista.js";
 
@@ -6,14 +5,11 @@ const list = new RoupaLista();
 
 export const getRoupas = (req, res) => {
     const roupas = list.getAllRoupas();
-
-    if (roupas.lengh) {
-        return res.status(200).send(roupas);
+    if (roupas !== 0) {
+        return res.status(200).send({roupas});
+    } else {
+        return res.status(200).send({ message: "Não ha roupas cadastradas" });
     }
-
-    return res.status(200).send({
-        message: "Não ha roupas 'cadastrados'"
-    });
 };
 
 export const getRoupaById = (req, res) => {
@@ -22,10 +18,11 @@ export const getRoupaById = (req, res) => {
 
     if (!roupa) {
         return res.status(404).send({
-            message: "Roupa não encontrada"
-        })
+            message: "Roupa não encontrada",
+        });
     }
     return res.status(200).send(roupa);
+
 };
 
 export const createRoupa = (req, res) => {
