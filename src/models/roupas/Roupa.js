@@ -1,5 +1,3 @@
-import { emit } from "nodemon"
-
 export class Roupa {
     constructor(nome, tipo, tamanho, cor, quantidade, imagemUrl) {
         this.id = parseFloat(Math.random() * 9999);

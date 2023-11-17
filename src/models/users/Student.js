@@ -1,4 +1,3 @@
-import { emit } from "nodemon"
 
 export class Student {
     constructor(name, email, age) {
